@@ -35,8 +35,34 @@ function pAequorFactory(num, arrayDNA) {
             //returns the mutated array
             return this.dna;
         },
+        //a method that compares two pAequor objects
+        compareDNA(obj) {
+            //we obtain the duplicates of both arrays
+            const duplicates = this.dna.filter(element => !obj.dna.indexOf(element));
+            //we find the percentage of duplicates
+            let duplicatePercentage = Math.floor((duplicates.length / this.dna.length) * 100);
+            //
+            return `speciment #1 and specimen #2 have ${duplicatePercentage}% in common`;
+        },
+        //P. aequor have a likelier chance of survival if their DNA is made up of at least 60% 'C' or 'G' bases
+        //.willLikelySurvive() returns true if the object’s .dna array contains at least 60% 'C' or 'G' bases. Otherwise, .willLikelySurvive() returns false
+        willLikelySurvive() {
+          const bases = [];
+          //finds all elements that are equal to 'C' or 'G' then push to bases array
+          for (let i = 0; i < this.dna.length; i++) {
+            if (this.dna[i] === 'C' || this.dna[i] === 'G') {
+              bases.push(this.dna[i]);
+            }
+          }
+          //percentage of bases in this.dna array
+          const percentage = Math.floor((bases.length / this.dna.length) * 100);
+          //check if the organism will survive by returning a boolean value
+          //if true, then the organism will likely survive
+          return percentage > 60 ? true : false;
+        },
     }
 }
 
 const Aequor1 = pAequorFactory(1, strand1);
-console.log(Aequor1.mutate());
+const Aequor2 = pAequorFactory(2, strand1);
+console.log(Aequor1.willLikelySurvive());
